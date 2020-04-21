@@ -1,0 +1,131 @@
+<div class="display-4 text-center">
+  <button 
+    style="width: 100px;"
+    routerLink="/"
+    type="button" 
+    class="btn btn-secondary"
+  >
+    Back
+  </button>
+  {{user}} repository
+  <button
+    style="width: 100px;" 
+    routerLink="/favorite"
+    type="button" 
+    class="btn btn-secondary"
+  >
+    Favorite
+  </button>
+</div>
+<br>
+<div class="list-group" *ngFor="let item of repoList">
+  <button type="button" class="list-group-item list-group-item-action text-center" (click)="open(mymodal, item.name)">
+    <b>{{item.name}}</b> <br>
+    <i *ngIf="item.description === null">Description: null</i>
+    <i *ngIf="item.description !== null">Description: {{item.description}}</i>
+  </button>
+
+</div>
+
+<br><br>
+
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Repository: {{selectRepo.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <tbody>
+      <tr>
+        <td>
+          <b>
+            Description: 
+          </b>
+        </td>
+        <td>
+          <i *ngIf="!selectRepo.description"> null</i>
+          <i *ngIf="selectRepo.description">{{selectRepo.description}}</i>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>
+            Language: 
+          </b>
+        </td>
+        <td>
+          <i>
+            {{selectRepo.language}}
+          </i>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Has_issues:</b></td>
+        <td>
+          <i *ngIf="selectRepo.has_issues === true"> 
+            <svg class="bi bi-check" width="1em" height="1em"
+              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"
+                clip-rule="evenodd" />
+            </svg>
+          </i>
+          <i *ngIf="selectRepo.has_issues === false">
+            <svg class="bi bi-x" width="1em" height="1em" viewBox="0 0 16 16"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z"
+                clip-rule="evenodd" />
+            </svg>
+          </i>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>
+            Html_url:
+          </b>
+        </td>
+        <td>
+          <i>
+            <a target="_blank" href="{{selectRepo.html_url}}">
+              {{selectRepo.html_url}}
+            </a>
+          </i>
+        </td>
+      </tr>
+    </tbody>
+  </div>
+  <div class="modal-footer">
+    <button 
+      type="button" 
+      class="btn btn-outline-dark" 
+      (click)="addFavorites()"
+      [disabled]="favoriteRepo"
+    >
+      Add to Favorites
+    </button>
+    <button 
+      type="button" 
+      class="btn btn-outline-dark" 
+      (click)="addFavorites()"
+      [disabled]="!favoriteRepo"
+    >
+      Delete to Favorites
+    </button>
+
+    <button 
+      type="button" 
+      class="btn btn-outline-dark" 
+      (click)="modal.close('Save click')"
+    >
+      Ok
+    </button>
+    
+  </div>
+</ng-template>

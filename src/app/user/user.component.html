@@ -1,0 +1,66 @@
+<div style="width: 95%; margin: auto;">
+  <div class="display-4 text-center">
+    Search
+  </div>
+  <div 
+    *ngIf="NotFound" 
+    class="text-danger text-center"
+  >
+    Users not found
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <button 
+        [ngStyle] = "{'border-color': NotFound ? 'red' : ''}"
+        (click)="fingUserByLogin()" 
+        class="btn btn-outline-secondary" 
+        type="button" 
+        id="button-addon1"
+      >
+        Search
+      </button>
+    </div>
+    <input 
+      type="text" 
+      placeholder="GitHub user"
+      [(ngModel)]="findLogin"
+      [ngStyle] = "{'border-color': NotFound ? 'red' : ''}" class="form-control"   
+      aria-describedby="button-addon1"
+    >
+  </div>
+
+  <table 
+    class="table center" 
+    style="width: 90%; margin: auto;" 
+    
+  >
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Avatar</th>
+        <th scope="col">Login</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let user of users">
+      <tr >
+        <td>
+          <img 
+            [src]="user.avatar_url" 
+            style="width: 100px; height: 100px;"
+          >
+        </td>
+        <td>
+          <a 
+            routerLink="/repos/{{user.login}}" 
+            class="blockquote"
+          >
+            {{user.login}}
+          </a>
+        </td>
+      </tr>
+      <ng-template><div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div></ng-template>
+    </tbody>
+  </table>
+  
+</div>
